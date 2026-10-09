@@ -1,0 +1,62 @@
+# Fake Review Detection & Reviewer Trust Score
+
+Final-year project — ML/NLP system to classify fake reviews and score reviewer trustworthiness.
+
+## Status: Week 1 complete (Setup, Data, EDA)
+
+## Project structure
+```
+fake-review-detection/
+├── data/
+│   ├── raw/              # raw datasets (sample data lives here)
+│   └── processed/        # cleaned/feature-engineered data (Week 2+)
+├── src/
+│   ├── generate_sample_data.py  # synthetic data for pipeline testing
+│   ├── data_loader.py           # standardized data loading (SWAP REAL DATA HERE)
+│   └── eda.py                   # exploratory data analysis
+├── notebooks/             # exploratory notebooks (optional, mirrors src/)
+├── models/                 # saved trained models (Week 3+)
+├── reports/
+│   └── figures/            # EDA plots, auto-generated
+└── app/                     # Streamlit dashboard (Week 5)
+```
+
+## Setup
+```bash
+python -m venv venv
+source venv/bin/activate   # Windows: venv\Scripts\activate
+pip install -r requirements.txt
+```
+
+## Run Week 1 pipeline
+```bash
+python src/generate_sample_data.py   # creates data/raw/reviews_sample.csv
+python src/eda.py                     # creates reports/figures/*.png + prints summary
+```
+
+## Swapping in real datasets
+`src/data_loader.py` has commented-out loader templates for:
+1. **Ott et al. Deceptive Opinion Spam Corpus** — labeled genuine/fake text, use for classifier training
+2. **Amazon/Yelp Reviews (Kaggle)** — reviewer metadata, use for the trust score module
+
+Uncomment the relevant loader, update the path, and change `load_reviews()` to call it.
+Everything downstream (EDA, preprocessing, features, models) reads the same standardized
+schema, so no other code changes are needed.
+
+## Week 1 EDA findings (from sample data — replace with real numbers once real data is loaded)
+- Fake reviews cluster heavily at 5 stars (rating distribution mismatch vs. genuine)
+- Fake reviews have a lower verified-purchase rate (~31% vs ~81% genuine)
+- Fake reviews tend to be shorter and more repetitive/templated in wording
+- A subset of reviewers post well above the median review count — a burst/frequency signal
+  worth encoding as a behavioral feature for the trust score
+
+## Roadmap
+See `fake_review_detection_roadmap.md` for the full phase-by-phase plan and the
+compressed 6-week (1.5 month) schedule.
+
+- [x] Week 1 — Setup, data loading, EDA
+- [ ] Week 2 — Preprocessing + feature engineering (linguistic + behavioral)
+- [ ] Week 3 — Classical ML models (Logistic Regression, Naive Bayes, XGBoost)
+- [ ] Week 4 — BERT fine-tuning + heuristic trust score
+- [ ] Week 5 — Learned trust score + SHAP + Streamlit dashboard
+- [ ] Week 6 — Deployment + report + slides
