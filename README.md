@@ -1,5 +1,7 @@
 # Fake Review Detection & Reviewer Trust Score
 
+**Live demo:** [Open the app](https://fake-review-detector-app.streamlit.app/)
+
 Final-year project — ML/NLP system to classify fake reviews and score reviewer trustworthiness.
 
 ## Status: classifier + trust score + explainability + dashboard + deployment
